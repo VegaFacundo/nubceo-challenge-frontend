@@ -49,9 +49,7 @@ const Lobby = () => {
       bandsToRender.sort(sortBandsName)
       setSortAs(true)
       setBandsData({ bandsToRender, notInListBands: [] })
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (e) {}
   }
 
   useEffect(() => {
