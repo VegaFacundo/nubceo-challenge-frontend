@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { useParams, useNavigate } from 'react-router-dom'
 import { links } from '../../router/links'
 import { getBandAlbumsDataAPI, getBandDataAPI } from '../../utils/axiosREST'
 
+import MembersAlbumsDisplay from '../../components/membersAlbumsDiplay'
+
 const Band = () => {
   const [band, setBand] = useState(() => {})
-  const [albums, setAlbums] = useState(() => {})
+  const [albums, setAlbums] = useState(() => [])
   const { bandId } = useParams()
   const navigate = useNavigate()
 
@@ -26,11 +28,11 @@ const Band = () => {
     try {
       const bandAlbumsData = await getBandAlbumsDataAPI({ bandId: bandId })
       if (!bandAlbumsData?.data) {
-        setAlbums({})
+        return setAlbums([])
       }
       setAlbums(bandAlbumsData.data)
     } catch (e) {
-      console.error(e)
+      setAlbums([])
     }
   }
 
@@ -38,7 +40,42 @@ const Band = () => {
     getBandData()
     getBandAlbumsData()
   }, [])
-  return <Grid container>test</Grid>
+  return (
+    <Grid
+      container
+      justifyContent="space-around"
+      flexDirection="column"
+      height="100%"
+      wrap="nowrap"
+    >
+      <Grid
+        item
+        xs={12}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        p={2}
+      >
+        {!band && 'Loading'}
+        <Typography variant="h3">{band?.name}</Typography>
+      </Grid>
+      {band?.members && (
+        <Grid item xs={12} display="flex" justifyContent="center" p={2}>
+          <MembersAlbumsDisplay arrayData={band.members} type="members" />
+        </Grid>
+      )}
+      {albums?.length > 0 && (
+        <Grid item xs={12} display="flex" justifyContent="center" p={2}>
+          <MembersAlbumsDisplay arrayData={albums} type="albums" />
+        </Grid>
+      )}
+      {band?.members && albums?.length === 0 && (
+        <Grid item xs={12} display="flex" justifyContent="center" p={2}>
+          <Typography>No albums to display</Typography>
+        </Grid>
+      )}
+    </Grid>
+  )
 }
 
 export default Band
