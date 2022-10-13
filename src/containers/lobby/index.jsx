@@ -9,7 +9,8 @@ import {
   Typography,
   TextField,
   Button,
-  CircularProgress
+  CircularProgress,
+  useTheme
 } from '@mui/material'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
@@ -27,6 +28,7 @@ const Lobby = () => {
   })
   const [sortAS, setSortAs] = useState(true)
   const navigate = useNavigate()
+  const theme = useTheme()
 
   const sortBandsName = (a, b) => {
     const sortAscOrDesc = sortAS ? 1 : -1
@@ -115,7 +117,7 @@ const Lobby = () => {
         <List
           sx={{
             width: '100%',
-            background: 'linear-gradient(45deg, #0a5642, #0a2356, #850d0d)'
+            background: `linear-gradient(45deg, ${theme.palette.green.bgDark}, ${theme.palette.blue.bgDark}, ${theme.palette.red.bgDark})`
           }}
           component='nav'
           aria-labelledby='nested-list-subheader'

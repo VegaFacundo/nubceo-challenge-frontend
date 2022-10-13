@@ -1,10 +1,10 @@
 import styled from '@emotion/styled'
 import { Grid } from '@mui/material'
 
-export const LoginContainer = styled(Grid)({
+export const LoginContainer = styled(Grid)(({ theme }) => ({
   width: '100%',
   height: '100%',
-  background: 'linear-gradient(131deg, #0a5642, #0a2356, #850d0d)',
+  background: `linear-gradient(131deg,${theme.palette.green.bgDark}, ${theme.palette.blue.bgDark}, ${theme.palette.red.bgDark})`,
   backgroundSize: '600% 600%',
   WebkitAnimation: 'AnimationName 9s ease infinite',
   MozAnimation: 'AnimationName 9s ease infinite',
@@ -24,4 +24,4 @@ export const LoginContainer = styled(Grid)({
     '50%': { backgroundPosition: '100% 50%' },
     '100%': { backgroundPosition: '0% 50%' }
   }
-})
+}))
