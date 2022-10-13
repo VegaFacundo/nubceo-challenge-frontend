@@ -1,11 +1,10 @@
-import { AppBar, Grid } from '@mui/material'
+import { Grid } from '@mui/material'
 import React from 'react'
-import MusicLogo from '../../assets/login/music-1-logo-svg-vector'
 import AppBarNabvar from '../appBar'
 
 const Layout = ({ user, setUser, children }) => {
   return (
-    <Grid container height="100%" flexDirection="column" wrap="nowrap">
+    <Grid container height='100%' flexDirection='column' wrap='nowrap'>
       <Grid item>
         <AppBarNabvar user={user} setUser={setUser} />
       </Grid>

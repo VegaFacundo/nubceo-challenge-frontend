@@ -12,27 +12,27 @@ export const getRoutesFromLogin = ({ anyDefaultProps, user, setUser }) => {
     notLogin: [
       {
         path: links.login,
-        element: <Login {...anyDefaultProps} setUser={setUser} />,
+        element: <Login {...anyDefaultProps} setUser={setUser} />
       },
       {
         path: '*',
-        element: <Navigate to={links.login} />,
-      },
+        element: <Navigate to={links.login} />
+      }
     ],
     login: [
       {
         path: links.lobby,
-        element: <Lobby />,
+        element: <Lobby />
       },
       {
         path: `${links.lobby}${links.band}/:${BAND_ID}`,
-        element: <Band />,
+        element: <Band />
       },
       {
         path: '*',
-        element: <Navigate to={links.lobby} />,
-      },
-    ],
+        element: <Navigate to={links.lobby} />
+      }
+    ]
   }
 
   const router = createBrowserRouter(routesToRender[routesToUse])

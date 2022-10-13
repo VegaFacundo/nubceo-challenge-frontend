@@ -1,41 +1,34 @@
-import { AppBar, Button, Grid } from '@mui/material'
+import { AppBar, Button, Grid, Typography } from '@mui/material'
 import MusicLogo from '../../assets/login/music-1-logo-svg-vector'
 import { deleteLocalUser } from '../../utils/localStorageManagment'
 
 const AppBarNabvar = ({ user, setUser }) => {
-  const isUserToRender = user ? true : false
+  const isUserToRender = !!user
   const logout = () => {
     deleteLocalUser()
     setUser(null)
   }
 
   return (
-    <Grid item xs={12}>
-      <AppBar position="static">
-        <Grid
-          container
-          px={2}
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Grid item>
-            <MusicLogo sx={{ fontSize: '130px' }} />
-          </Grid>
-          <Grid item>Welcome {user?.name ?? 'back'}</Grid>
-          {isUserToRender && (
-            <Grid item>
-              <Button
-                variant="outlined"
-                sx={{ color: 'white' }}
-                onClick={logout}
-              >
-                Logout
-              </Button>
-            </Grid>
-          )}
+    <AppBar position='static'>
+      <Grid container px={2} alignItems='center' justifyContent='space-between'>
+        <Grid item maxWidth='100px'>
+          <MusicLogo sx={{ fontSize: '130px' }} />
         </Grid>
-      </AppBar>
-    </Grid>
+        <Grid item>
+          <Typography variant={{ xs: 'body', md: 'h5' }}>
+            Welcome {user?.name ?? 'back'}
+          </Typography>
+        </Grid>
+        {isUserToRender && (
+          <Grid item maxWidth='100px'>
+            <Button variant='outlined' sx={{ color: 'white' }} onClick={logout}>
+              Logout
+            </Button>
+          </Grid>
+        )}
+      </Grid>
+    </AppBar>
   )
 }
 

@@ -14,7 +14,7 @@ const Login = ({ setUser }) => {
     setDisabledContinue(true)
     const user = {
       email,
-      password,
+      password
     }
     try {
       const loginResponse = await fakeLogin(user)
@@ -29,7 +29,7 @@ const Login = ({ setUser }) => {
   }
   const setStates = {
     email: (email) => setEmail(email),
-    password: (password) => setPassword(password),
+    password: (password) => setPassword(password)
   }
 
   const handleChangeInputs = (e) => {
@@ -40,18 +40,18 @@ const Login = ({ setUser }) => {
   return (
     <LoginContainer
       container
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
       spacing={2}
-      margin="auto 0"
+      margin='auto 0'
     >
       <Grid item>
         <TextField
-          id="input-email"
-          label="Email"
-          name="email"
-          type="email"
+          id='input-email'
+          label='Email'
+          name='email'
+          type='email'
           value={email}
           onChange={handleChangeInputs}
           fullWidth
@@ -59,10 +59,10 @@ const Login = ({ setUser }) => {
       </Grid>
       <Grid item>
         <TextField
-          id="input-password"
-          label="Password"
-          name="password"
-          type="password"
+          id='input-password'
+          label='Password'
+          name='password'
+          type='password'
           value={password}
           onChange={handleChangeInputs}
           fullWidth
@@ -70,16 +70,16 @@ const Login = ({ setUser }) => {
       </Grid>
       <Grid item>
         <Button
-          variant="contained"
+          variant='contained'
           disabled={disabledContinue}
-          loadingposition="start"
+          loadingposition='start'
           fullWidth
           onClick={onSubmitLogin}
         >
           {disabledContinue && (
-            <CircularProgress size={24} color="inherit" pr={2} />
+            <CircularProgress size={24} color='inherit' pr={2} />
           )}
-          <Typography px={2} color="black">
+          <Typography px={2} color='black'>
             Continue
           </Typography>
         </Button>

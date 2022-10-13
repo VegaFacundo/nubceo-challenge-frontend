@@ -14,7 +14,7 @@ const Band = () => {
 
   const getBandData = async () => {
     try {
-      const bandData = await getBandDataAPI({ bandId: bandId })
+      const bandData = await getBandDataAPI({ bandId })
       if (!bandData?.data) {
         navigate(links.lobby)
       }
@@ -26,7 +26,7 @@ const Band = () => {
 
   const getBandAlbumsData = async () => {
     try {
-      const bandAlbumsData = await getBandAlbumsDataAPI({ bandId: bandId })
+      const bandAlbumsData = await getBandAlbumsDataAPI({ bandId })
       if (!bandAlbumsData?.data) {
         return setAlbums([])
       }
@@ -47,42 +47,42 @@ const Band = () => {
   return (
     <Grid
       container
-      justifyContent="start"
-      flexDirection="column"
-      height="100%"
-      wrap="nowrap"
+      justifyContent='start'
+      flexDirection='column'
+      height='100%'
+      wrap='nowrap'
     >
-      <Grid item display="flex" p={2}>
+      <Grid item display='flex' p={2}>
         <Button onClick={goBack}>Go Back</Button>
       </Grid>
       <Grid
         item
         xs={12}
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
         p={2}
       >
         {!band && 'Loading'}
-        <Typography variant="h3">{band?.name}</Typography>
+        <Typography variant='h3'>{band?.name}</Typography>
       </Grid>
       {band?.members && (
-        <Grid item xs={12} display="flex" justifyContent="center" p={2}>
-          <MembersAlbumsDisplay arrayData={band.members} type="members" />
+        <Grid item xs={12} display='flex' justifyContent='center' p={2}>
+          <MembersAlbumsDisplay arrayData={band.members} type='members' />
         </Grid>
       )}
       {albums?.length > 0 && (
-        <Grid item xs={12} display="flex" justifyContent="center" p={2}>
-          <MembersAlbumsDisplay arrayData={albums} type="albums" />
+        <Grid item xs={12} display='flex' justifyContent='center' p={2}>
+          <MembersAlbumsDisplay arrayData={albums} type='albums' />
         </Grid>
       )}
       {band?.members && albums?.length === 0 && (
         <Grid
           item
           xs={12}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
+          display='flex'
+          justifyContent='center'
+          alignItems='center'
           p={2}
         >
           <Typography>No albums to display</Typography>

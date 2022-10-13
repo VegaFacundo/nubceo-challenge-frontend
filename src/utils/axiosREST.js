@@ -1,4 +1,3 @@
-import { ErrorResponse } from '@remix-run/router'
 import { createAxiosInstance } from './axios'
 import { ALBUMS_URL, BAND_URL, BAND_ID } from './const'
 const axios = createAxiosInstance()

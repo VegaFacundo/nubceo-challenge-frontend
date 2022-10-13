@@ -9,6 +9,7 @@ import {
   Typography,
   TextField,
   Button,
+  CircularProgress
 } from '@mui/material'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
@@ -22,7 +23,7 @@ import MusicVideoIcon from '@mui/icons-material/MusicVideo'
 const Lobby = () => {
   const [bandsData, setBandsData] = useState({
     bandsToRender: [],
-    notInListBands: [],
+    notInListBands: []
   })
   const [sortAS, setSortAs] = useState(true)
   const navigate = useNavigate()
@@ -99,9 +100,9 @@ const Lobby = () => {
   return (
     <Grid container spacing={3} p={2}>
       <Grid item xs={12}>
-        <Grid container spacing={2} alignItems="center">
+        <Grid container spacing={2} alignItems='center'>
           <Grid item>
-            <TextField onChange={handleChangeSearch} size="small" />
+            <TextField onChange={handleChangeSearch} size='small' />
           </Grid>
           <Grid item>
             <Button onClick={getAllBands} sx={{ color: 'white' }}>
@@ -114,12 +115,12 @@ const Lobby = () => {
         <List
           sx={{
             width: '100%',
-            background: 'linear-gradient(45deg, #0a5642, #0a2356, #850d0d)',
+            background: 'linear-gradient(45deg, #0a5642, #0a2356, #850d0d)'
           }}
-          component="nav"
-          aria-labelledby="nested-list-subheader"
+          component='nav'
+          aria-labelledby='nested-list-subheader'
           subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
+            <ListSubheader component='div' id='nested-list-subheader'>
               <Typography>
                 All bands:
                 <NorthIcon
@@ -141,7 +142,7 @@ const Lobby = () => {
                   >
                     <ListItemText
                       primary={
-                        <Box display="flex" alignItems="center">
+                        <Box display='flex' alignItems='center'>
                           <Typography
                             onClick={() => goToBand({ bandID: band.id })}
                             pr={1}
@@ -149,22 +150,32 @@ const Lobby = () => {
                             {band.name}
                           </Typography>
                           <MusicVideoIcon
-                            fontSize="small"
+                            fontSize='small'
                             onClick={() => goToBand({ bandID: band.id })}
                           />
                         </Box>
                       }
                     />
-                    {band.members && band.collapse ? (
-                      <ExpandLess />
-                    ) : (
-                      <ExpandMore />
-                    )}
+                    {band.members && band.collapse
+                      ? (
+                        <ExpandLess />
+                        )
+                      : (
+                        <ExpandMore />
+                        )}
                   </ListItemButton>
                   {band.members && <MembersCollapse band={band} />}
                 </Box>
               )
             })}
+
+          {!(bandsData.bandsToRender.length > 0) && (
+            <Grid container justifyContent='center'>
+              <Grid item p={4}>
+                <CircularProgress size={24} color='inherit' pr={2} />
+              </Grid>
+            </Grid>
+          )}
         </List>
       </Grid>
     </Grid>
