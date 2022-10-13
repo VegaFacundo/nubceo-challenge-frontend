@@ -1,15 +1,10 @@
 import React, { useState } from 'react'
-import {
-  TextField,
-  Typography,
-  Button,
-  Grid,
-  CircularProgress,
-} from '@mui/material'
-import { LoginContainer } from './styledLoginComponents'
+import { TextField, Typography, Grid, CircularProgress } from '@mui/material'
+import { LoginContainer } from '../../components/login/styledLoginComponents'
 import { fakeLogin } from '../../utils/fakeLogin'
 import { redirect } from 'react-router-dom'
 import { links } from '../../router/links'
+import { Button } from '../../components/button/button'
 
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState(() => '')
@@ -26,6 +21,7 @@ const Login = ({ setUser }) => {
       if (loginResponse.token) {
         setUser(loginResponse)
         redirect(links.lobby)
+        return
       }
     } catch (e) {
       setDisabledContinue(false)
@@ -76,15 +72,16 @@ const Login = ({ setUser }) => {
         <Button
           variant="contained"
           disabled={disabledContinue}
-          loadingPosition="start"
+          loadingposition="start"
           fullWidth
           onClick={onSubmitLogin}
-          sx={{ backgroundColor: 'white' }}
         >
           {disabledContinue && (
-            <CircularProgress size={24} color="secondary" pr={2} />
+            <CircularProgress size={24} color="inherit" pr={2} />
           )}
-          <Typography px={2}>Continue</Typography>
+          <Typography px={2} color="black">
+            Continue
+          </Typography>
         </Button>
       </Grid>
     </LoginContainer>

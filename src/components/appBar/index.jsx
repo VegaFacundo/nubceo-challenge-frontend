@@ -3,24 +3,27 @@ import MusicLogo from '../../assets/login/music-1-logo-svg-vector'
 import { deleteLocalUser } from '../../utils/localStorageManagment'
 
 const AppBarNabvar = ({ user, setUser }) => {
-  const isUserToRender = !!user.token
+  const isUserToRender = user ? true : false
   const logout = () => {
     deleteLocalUser()
-    setUser({ token: false })
+    setUser(null)
   }
 
   return (
-    <Grid item minWidth="100%">
+    <Grid item xs={12}>
       <AppBar position="static">
-        <Grid container px={2} spacing={2} alignItems="center">
-          <Grid item ml={2}>
+        <Grid
+          container
+          px={2}
+          alignItems="center"
+          justifyContent="space-between"
+        >
+          <Grid item>
             <MusicLogo sx={{ fontSize: '130px' }} />
           </Grid>
-          <Grid item ml="auto">
-            Welcome {user.name ?? 'back'}
-          </Grid>
+          <Grid item>Welcome {user?.name ?? 'back'}</Grid>
           {isUserToRender && (
-            <Grid item ml="auto">
+            <Grid item>
               <Button
                 variant="outlined"
                 sx={{ color: 'white' }}

@@ -6,7 +6,7 @@ import { links } from './links'
 import { BAND_ID } from '../utils/const'
 
 export const getRoutesFromLogin = ({ anyDefaultProps, user, setUser }) => {
-  const routesToUse = user?.token ? 'login' : 'notLogin'
+  const routesToUse = user ? 'login' : 'notLogin'
 
   const routesToRender = {
     notLogin: [

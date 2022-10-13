@@ -3,9 +3,7 @@ import {
   ListSubheader,
   List,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
-  Collapse,
   Box,
   Grid,
   Typography,
@@ -14,19 +12,19 @@ import {
 } from '@mui/material'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
-import StarBorder from '@mui/icons-material/StarBorder'
 import { getAllBandsAPI } from '../../utils/axiosREST'
 import NorthIcon from '@mui/icons-material/North'
 import { links } from '../../router/links'
-import { Link, useNavigate } from 'react-router-dom'
-import { ConstructionOutlined } from '@mui/icons-material'
+import { useNavigate } from 'react-router-dom'
+import MembersCollapse from '../../components/lobby/collapse'
+import MusicVideoIcon from '@mui/icons-material/MusicVideo'
 
 const Lobby = () => {
   const [bandsData, setBandsData] = useState({
     bandsToRender: [],
     notInListBands: [],
   })
-  const [sortAS, setSortAs] = useState(() => true)
+  const [sortAS, setSortAs] = useState(true)
   const navigate = useNavigate()
 
   const sortBandsName = (a, b) => {
@@ -46,40 +44,37 @@ const Lobby = () => {
       const bandsToRender = allBandsResponse.data.map((band) => {
         return { ...band, collapse: false }
       })
-      bandsToRender.sort(sortBandsName)
       setSortAs(true)
+      bandsToRender.sort(sortBandsName)
       setBandsData({ bandsToRender, notInListBands: [] })
     } catch (e) {}
   }
-
-  useEffect(() => {
-    getAllBands()
-  }, [])
 
   const sortByNameBands = () => {
     setBandsData((state) => {
       state.bandsToRender.sort(sortBandsName)
       return { ...state }
     })
-    setSortAs((state) => !state)
   }
 
   const handleChangeSearch = (e) => {
     const { value } = e.target
-    setBandsData((state) => {
-      state.bandsToRender = [...state.bandsToRender, ...state.notInListBands]
-      state.notInListBands = []
-      const bandsToRender = state.bandsToRender.filter((band) =>
-        band.name.toLowerCase().includes(value.toLowerCase())
-      )
-      bandsToRender.sort(sortBandsName)
-      const notInListBands = state.bandsToRender.filter(
-        (band) => !band.name.toLowerCase().includes(value.toLowerCase())
-      )
-      state.bandsToRender = bandsToRender
-      state.notInListBands = notInListBands
-      return { ...state }
-    })
+    setBandsData((state) => searchIsIncludedInList({ state, value }))
+  }
+
+  const searchIsIncludedInList = ({ state, value }) => {
+    state.bandsToRender = [...state.bandsToRender, ...state.notInListBands]
+    state.notInListBands = []
+    const bandsToRender = state.bandsToRender.filter((band) =>
+      band.name.toLowerCase().includes(value.toLowerCase())
+    )
+    bandsToRender.sort(sortBandsName)
+    const notInListBands = state.bandsToRender.filter(
+      (band) => !band.name.toLowerCase().includes(value.toLowerCase())
+    )
+    state.bandsToRender = bandsToRender
+    state.notInListBands = notInListBands
+    return { ...state }
   }
 
   const handleChangeCollapse = (index) => {
@@ -92,6 +87,15 @@ const Lobby = () => {
   const goToBand = ({ bandID }) => {
     navigate(`.${links.band}/${bandID}`)
   }
+
+  useEffect(() => {
+    getAllBands()
+  }, [])
+
+  useEffect(() => {
+    sortByNameBands()
+  }, [sortAS])
+
   return (
     <Grid container spacing={3} p={2}>
       <Grid item xs={12}>
@@ -115,14 +119,11 @@ const Lobby = () => {
           component="nav"
           aria-labelledby="nested-list-subheader"
           subheader={
-            <ListSubheader
-              component="div"
-              id="nested-list-subheader"
-              onClick={sortByNameBands}
-            >
+            <ListSubheader component="div" id="nested-list-subheader">
               <Typography>
                 All bands:
                 <NorthIcon
+                  onClick={() => setSortAs((state) => !state)}
                   sx={{ transform: `rotate(${sortAS ? 0 : 180}deg)` }}
                 />
               </Typography>
@@ -140,8 +141,17 @@ const Lobby = () => {
                   >
                     <ListItemText
                       primary={
-                        <Box onClick={() => goToBand({ bandID: band.id })}>
-                          {band.name}
+                        <Box display="flex" alignItems="center">
+                          <Typography
+                            onClick={() => goToBand({ bandID: band.id })}
+                            pr={1}
+                          >
+                            {band.name}
+                          </Typography>
+                          <MusicVideoIcon
+                            fontSize="small"
+                            onClick={() => goToBand({ bandID: band.id })}
+                          />
                         </Box>
                       }
                     />
@@ -151,32 +161,7 @@ const Lobby = () => {
                       <ExpandMore />
                     )}
                   </ListItemButton>
-                  {band.members && (
-                    <Collapse in={band.collapse} unmountOnExit>
-                      <List component="div" disablePadding>
-                        <Grid container flexDirection="column" spacing={2}>
-                          {band.members.map((member, index) => {
-                            return (
-                              <Grid item key={index}>
-                                <ListItemButton sx={{ pl: 4 }} key={index}>
-                                  <ListItemIcon>
-                                    <Grid
-                                      item
-                                      display="flex"
-                                      alignItems="center"
-                                    >
-                                      <StarBorder />
-                                      <ListItemText primary={member.name} />
-                                    </Grid>
-                                  </ListItemIcon>
-                                </ListItemButton>
-                              </Grid>
-                            )
-                          })}
-                        </Grid>
-                      </List>
-                    </Collapse>
-                  )}
+                  {band.members && <MembersCollapse band={band} />}
                 </Box>
               )
             })}

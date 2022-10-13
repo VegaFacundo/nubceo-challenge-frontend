@@ -7,7 +7,7 @@ export const setLocalUser = (userData) => {
 
 export const getLocalUser = () => {
   const userData = JSON.parse(localStorage.getItem(storageKeys.user))
-  return userData ?? { token: false }
+  return userData ?? null
 }
 
 export const deleteLocalUser = () => {

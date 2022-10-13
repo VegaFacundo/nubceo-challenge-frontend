@@ -3,8 +3,8 @@ import { Grid, Typography } from '@mui/material'
 import { useParams, useNavigate } from 'react-router-dom'
 import { links } from '../../router/links'
 import { getBandAlbumsDataAPI, getBandDataAPI } from '../../utils/axiosREST'
-
 import MembersAlbumsDisplay from '../../components/membersAlbumsDiplay'
+import { Button } from '../../components/button/button'
 
 const Band = () => {
   const [band, setBand] = useState(() => {})
@@ -36,6 +36,10 @@ const Band = () => {
     }
   }
 
+  const goBack = ({ bandID }) => {
+    navigate(-1)
+  }
+
   useEffect(() => {
     getBandData()
     getBandAlbumsData()
@@ -43,11 +47,14 @@ const Band = () => {
   return (
     <Grid
       container
-      justifyContent="space-around"
+      justifyContent="start"
       flexDirection="column"
       height="100%"
       wrap="nowrap"
     >
+      <Grid item display="flex" p={2}>
+        <Button onClick={goBack}>Go Back</Button>
+      </Grid>
       <Grid
         item
         xs={12}
@@ -70,7 +77,14 @@ const Band = () => {
         </Grid>
       )}
       {band?.members && albums?.length === 0 && (
-        <Grid item xs={12} display="flex" justifyContent="center" p={2}>
+        <Grid
+          item
+          xs={12}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          p={2}
+        >
           <Typography>No albums to display</Typography>
         </Grid>
       )}
