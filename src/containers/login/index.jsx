@@ -9,9 +9,10 @@ import { Button } from '../../components/button/button'
 const Login = ({ setUser }) => {
   const [email, setEmail] = useState(() => '')
   const [password, setPassword] = useState(() => '')
-  const [disabledContinue, setDisabledContinue] = useState(() => false)
+  const [submitingLogin, setSubmitingLogin] = useState(() => false)
+  const disableLogin = !email || !password || submitingLogin
   const onSubmitLogin = async () => {
-    setDisabledContinue(true)
+    setSubmitingLogin(true)
     const user = {
       email,
       password
@@ -24,7 +25,7 @@ const Login = ({ setUser }) => {
         return
       }
     } catch (e) {
-      setDisabledContinue(false)
+      setSubmitingLogin(false)
     }
   }
   const setStates = {
@@ -71,12 +72,12 @@ const Login = ({ setUser }) => {
       <Grid item>
         <Button
           variant='contained'
-          disabled={disabledContinue}
+          disabled={disableLogin}
           loadingposition='start'
           fullWidth
           onClick={onSubmitLogin}
         >
-          {disabledContinue && (
+          {submitingLogin && (
             <CircularProgress size={24} color='inherit' pr={2} />
           )}
           <Typography px={2} color='black'>
